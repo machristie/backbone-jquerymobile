@@ -24,8 +24,6 @@ require.config({
     }
 });
 
-require(['jquery-mobile']);
-
 require(['backbone', 'jquery', 'routers/router'], function(Backbone, $, Router) {
 
     $(document).ready(function () {
