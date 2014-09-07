@@ -22,17 +22,7 @@ define(['backbone', 'jquery', 'views/HomeView', 'views/Page1View', 'views/Page2V
                 return false;
             });
             this.firstPage = true;
-            $(document).on( "pagecontainershow", _.bind(function( event, ui ) {
-                // TODO: factor this out into a separate method
-                // Figure out what page we are showing and call 'PageView.show' on it
-                // TODO: JQM 1.4.3 has ui.toPage, which would be preferred to getActivePage
-                var activePage = $( ":mobile-pagecontainer" ).pagecontainer( "getActivePage" );
-                _.each(this.pages, function(page) {
-                    if( activePage.get(0) === page.el ){
-                        page.show(event, ui);
-                    }
-                });
-            }, this));
+            $(document).on( "pagecontainershow", _.bind(this.handlePageContainerShow, this));
         },
 
         home:function () {
@@ -63,6 +53,17 @@ define(['backbone', 'jquery', 'views/HomeView', 'views/Page1View', 'views/Page2V
             }
             $( ":mobile-pagecontainer" ).pagecontainer( "change", page.$el,
                     { changeHash: false });
+        },
+
+        handlePageContainerShow: function (event, ui) {
+            // Figure out what page we are showing and call 'PageView.show' on it
+            // TODO: JQM 1.4.3 has ui.toPage, which would be preferred to getActivePage
+            var activePage = $( ":mobile-pagecontainer" ).pagecontainer( "getActivePage" );
+            _.each(this.pages, function(page) {
+                if( activePage.get(0) === page.el ){
+                    page.show(event, ui);
+                }
+            });
         }
 
     });
